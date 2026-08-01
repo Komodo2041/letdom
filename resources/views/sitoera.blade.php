@@ -15,9 +15,12 @@
         @csrf
         <div class="form-group">
             <label>Numer</label>
-            <input type="text" name="nr" class="form-control" placeholder="Obroty" value="{{$nr}}">
+            <input type="text" name="nr" class="form-control" placeholder="Początek" value="{{$nr}}">
         </div>
-
+        <div class="form-group">
+            <label>Wielkość</label>
+            <input type="text" name="size" class="form-control" placeholder="Size" value="{{$size}}">
+        </div>
         <div class="form-group">
             <input type="hidden" value="1" name="save" />
 

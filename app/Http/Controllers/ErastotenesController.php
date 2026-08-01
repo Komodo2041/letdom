@@ -10,22 +10,23 @@ class ErastotenesController extends Controller
     public function sito(Request $request)
     {
         $nr = $request->input('nr', 0);
-
+        $size = $request->input('size', 100);
         $save =  $request->input('save');
         if ($save) {
 
             $validator = Validator::make($request->all(), [
                 'nr' => 'required|int',
+                'size' => 'required|int',
             ]);
 
             if ($validator->fails()) {
                 $validated = $validator->errors()->all();
-                return view("sitoera", ["nr" => $nr, 'errorforms' => implode(", ", $validated), "result" => []]);
+                return view("sitoera", ["nr" => $nr, "size" => $size, 'errorforms' => implode(", ", $validated), "result" => []]);
             } else {
                 $validated = $validator->validated();
 
                 $min =   $validated['nr'];
-                $max = $min + 100;
+                $max = $min + $validated['size'];
                 $sqrt = ceil(sqrt($max));
                 $result = [];
                 for ($i = $min; $i < $max; $i++) {
@@ -37,10 +38,10 @@ class ErastotenesController extends Controller
 
                 $result = array_chunk($result, 10, true);
 
-                return view("sitoera", ["nr" => $validated['nr'], "result" => $result]);
+                return view("sitoera", ["nr" => $validated['nr'], "size" => $validated['size'], "result" => $result]);
             }
         }
-        return view("sitoera", ["nr" => $nr, "result" => []]);
+        return view("sitoera", ["nr" => $nr, "size" => $size, "result" => []]);
     }
 
     private function checkDiff($num, $sqrt)
