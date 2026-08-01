@@ -7,3 +7,12 @@ body {
 button {
     margin: 3px;
 }
+
+#colortable td {
+    padding: 8px;
+    border: 1px solid #1c1c1c;
+}
+
+#colortable td.red {
+    background: red;
+}
