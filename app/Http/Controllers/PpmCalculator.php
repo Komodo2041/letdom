@@ -33,4 +33,30 @@ class PpmCalculator extends Controller
         }
         return view("ppm", ["masa" =>  $masa, "ppm" => $ppm, "calco" => []]);
     }
+
+    public function potega(Request $request)
+    {
+        $percent = $request->input('percent', 0);
+        $save =  $request->input('save');
+        if ($save) {
+
+            $validator = Validator::make($request->all(), [
+                'percent' => 'required|int',
+            ]);
+
+            if ($validator->fails()) {
+                $validated = $validator->errors()->all();
+                return view("potega", ["percent" => $percent, 'errorforms' => implode(", ", $validated),  "calco" => []]);
+            } else {
+                $validated = $validator->validated();
+                $percent = 1 + $validated['percent'] / 100;
+                $calco['10'] = pow($percent, 10);
+                $calco['20'] = pow($percent, 20);
+                $calco['50'] = pow($percent, 50);
+                $calco['two'] = log(2, $percent);
+                return view("potega", ["percent" => $validated['percent'],   "calco" => $calco]);
+            }
+        }
+        return view("potega", ["percent" =>  $percent,  "calco" => []]);
+    }
 }
