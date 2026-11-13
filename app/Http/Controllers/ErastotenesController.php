@@ -55,4 +55,37 @@ class ErastotenesController extends Controller
         }
         return $res;
     }
+
+    public function place(Request $request)
+    {
+        $lg1 = $request->input('lg1', 0);
+        $lg2 = $request->input('lg2', 0);
+        $place1 = $request->input('place1', 0);
+        $place2 = $request->input('place2', 0);
+
+        $save =  $request->input('save');
+        if ($save) {
+
+            $validator = Validator::make($request->all(), [
+                'place1' => 'required|int',
+                'place2' => 'required|int',
+                'lg1' => 'required|int',
+                'lg2' => 'required|int'
+            ]);
+
+            if ($validator->fails()) {
+                $validated = $validator->errors()->all();
+                return view("place", ["place1" => $validated['place1'], "place2" => $validated['place2'], "lg1" => $validated['lg1'], "lg2" => $validated['lg2'], 'errorforms' => implode(", ", $validated),  "calco" => []]);
+            } else {
+                $validated = $validator->validated();
+
+                $calco['avg'] = ($validated['lg1'] * $validated['place1'] + $validated['lg2'] * $validated['place2']) / ($validated['lg1'] + $validated['lg2']);
+                $calco['avg'] = round($calco['avg']);
+                $calco['c1'] = $validated['lg1'] * $validated['place1'];
+                $calco['c2'] = $validated['lg2'] * $validated['place2'];
+                return view("place", ["place1" => $validated['place1'], "place2" => $validated['place2'], "lg1" => $validated['lg1'], "lg2" => $validated['lg2'],   "calco" => $calco]);
+            }
+        }
+        return view("place", ["place1" => $place1, "place2" => $place2, "lg1" => $lg1, "lg2" => $lg2, "calco" => []]);
+    }
 }

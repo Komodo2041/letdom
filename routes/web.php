@@ -10,3 +10,5 @@ Route::match(["get", "post"], '/erastotenessito100', "App\Http\Controllers\Erast
 
 Route::match(["get", "post"], '/ppmcalc', "App\Http\Controllers\PpmCalculator@ppmcalc");
 Route::match(["get", "post"], '/potega', "App\Http\Controllers\PpmCalculator@potega");
+
+Route::match(["get", "post"], '/place', "App\Http\Controllers\ErastotenesController@place");
