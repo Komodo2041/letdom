@@ -9,6 +9,7 @@
    <a href="/ppmcalc"><button type="button" class="btn btn-primary">PPM Calc</button></a>
    <a href="/potega"><button type="button" class="btn btn-primary">Sprawdzenie potęg procentów</button></a>
    <a href="/place"><button type="button" class="btn btn-primary">Średnia płac</button></a>
+   <a href="/group"><button type="button" class="btn btn-primary">Koszt Grupy</button></a>
 </div>
 
 

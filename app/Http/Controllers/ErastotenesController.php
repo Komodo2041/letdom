@@ -88,4 +88,34 @@ class ErastotenesController extends Controller
         }
         return view("place", ["place1" => $place1, "place2" => $place2, "lg1" => $lg1, "lg2" => $lg2, "calco" => []]);
     }
+
+
+    public function group(Request $request)
+    {
+
+        $place1 = $request->input('place1', 0);
+
+        $save =  $request->input('save');
+        if ($save) {
+
+            $validator = Validator::make($request->all(), [
+                'place1' => 'required|int',
+            ]);
+
+            if ($validator->fails()) {
+                $validated = $validator->errors()->all();
+                return view("group", ["place1" => $validated['place1'],   'errorforms' => implode(", ", $validated),  "calco" => []]);
+            } else {
+                $validated = $validator->validated();
+
+                $calco['one'] = 12 * 2 * $validated['place1'];
+                $calco['ten'] = 10 *  $calco['one'];
+                $calco['sto'] = 100 *  $calco['one'];
+                $calco['th'] = 1000 *  $calco['one'];
+                $calco['th1'] = 10000 *  $calco['one'];
+                return view("group", ["place1" => $validated['place1'],  "calco" => $calco]);
+            }
+        }
+        return view("group", ["place1" => $place1,  "calco" => []]);
+    }
 }
